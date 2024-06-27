@@ -1,12 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { hightlightsSlides } from '../constants'
 
-const VideoCarousel = () => {
-    const videoRef = useRef([])
-    const videoSpanRef = useRef([])
-    const videoDivRef = useRef([])
+interface videoState {
+  isEnd: boolean,
+  startPlay: boolean,
+  videoId: number,
+  isLastVideo: boolean,
+  isPlaying: boolean
+ }
 
-     const [video, setVideo] = useState({
+const VideoCarousel = () => {
+    const videoRef = useRef<HTMLVideoElement[]>([])
+    const videoSpanRef = useRef<HTMLSpanElement[]>([])
+    const videoDivRef = useRef<HTMLDivElement[]>([])
+     
+      
+     const [video, setVideo] = useState<videoState>({
         isEnd: false,
         startPlay: false,
         videoId: 0,
@@ -19,10 +28,10 @@ const VideoCarousel = () => {
       useEffect(() => {   
            if(loadedData.length > 3) {
                if(!isPlaying) {
-                //@ts-ignore
+                
                 videoRef.current[videoId].pause();
                } else {
-                //@ts-ignore
+                
                 startPlay && videoRef.current[videoId].play();
                }
            }
