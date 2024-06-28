@@ -31,7 +31,6 @@ const VideoCarousel = () => {
                 
                 videoRef.current[videoId].pause();
                } else {
-                
                 startPlay && videoRef.current[videoId].play();
                }
            }
@@ -62,8 +61,14 @@ const VideoCarousel = () => {
                     <video id='video' playsInline={true} preload='auto' muted
                     ref = {(el) => (
                         //@ts-ignore
-                        videoRef.current[i] = el
-                    )}>
+                        videoRef.current[i] = el)}
+                        onPlay={() =>{
+                          setVideo((prevVideo) => ({
+                            ...prevVideo, isPlaying: true
+                          }))
+                        }}
+                        >
+
                         <source src={list.video} type='video/mp4'/>
                     </video>
                </div>
