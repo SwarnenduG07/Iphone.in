@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { hightlightsSlides } from '../constants'
+import { pauseImg, playImg, replayImg } from '../utils'
 
 interface videoState {
   isEnd: boolean,
@@ -24,6 +25,8 @@ const VideoCarousel = () => {
      })
      const [loadedData, setloadedData] = useState([])
       const { isEnd, startPlay, videoId, isLastVideo, isPlaying } = video;
+
+      
       
       useEffect(() => {   
            if(loadedData.length > 3) {
@@ -51,6 +54,25 @@ const VideoCarousel = () => {
              })
            }
       },[videoId, startPlay])
+
+      const handelPrecess = (type, i) => {
+         switch (typr) {
+          case 'video end':
+              setVideo((prevVideo) => ({...prevVideo, isEnd: true, videoId: i + 1}))
+            break;
+           case "video-last":
+            setVideo((prevVideo) => ({...prevVideo, isLastVideo: true,}))
+            break;
+            case "video-reset":
+            setVideo((prevVideo) => ({...prevVideo, isLastVideo: false, videoId: 0}))
+            break;
+            case "play": 
+            setVideo((prevVideo) => ({...prevVideo, isPlaying: !prevVideo.isPlaying}))
+          break;
+          default:
+            return video
+         }
+      }
   return (
     <>
       <div className='flex items-center'>
@@ -83,7 +105,33 @@ const VideoCarousel = () => {
           </div>
          ))}
       </div>
-     
+      <div className='relative flex-center mt-10'>
+          <div className='flex-center py-5 px-7 bg-gray-300 backdrop-blur rounded-full'>
+            {videoRef.current.map((_, i) =>(
+              <span 
+              key={i}
+              //@ts-ignore
+              ref={(el) => (videoRef.current[i] = el)}
+              className='mx-2 w-3 h-3 bg-gray-200 rounded-full relative cursor-pointer'
+              >
+                <span className='absolute h-full w-full rounded-full'
+                //@ts-ignore
+                ref={(el) => (videoSpanRef.current[i] = el)}
+                />
+
+              
+              </span>
+            ))}
+            </div>    
+            <button className='contron-btn'>
+              <img src={isLastVideo ? replayImg : !isPlaying ? playImg : pauseImg} alt={isLastVideo ? 'replay' : !isPlaying ? 'play' : 'pause'}
+              onClick={isLastVideo ? () =>  handelPrecess('video-reset')
+                : !isPlaying ? () => handelPrecess('play')
+                : () => handelPrecess('pause')
+                  
+              } />
+            </button>
+      </div>
     </>
   )
 }
