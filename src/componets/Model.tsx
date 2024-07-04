@@ -1,8 +1,20 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import ModelView from "./ModelView"
+import { useRef, useState } from "react"
+import { yellowImg } from "../utils"
 
 const Model = () => {
+   const [size , setSize] = useState('small')
+   const [model, setModel] = useState({
+      title: "iphone 15 pro in Natural Titanium", 
+      color: ['#8F8A81','#FFE789','#6F6C64'],
+      img: yellowImg
+   })
+     //TODO:  camera control for the model view
+     const cameraControlSmall = useRef();
+     const cameraControlLarge = useRef();
+     
   useGSAP(() => {
       gsap.to('#heading', {y: 0, opacity: 1})
   },[])
