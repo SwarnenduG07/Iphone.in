@@ -19,7 +19,7 @@ const VideoCarousel = () => {
     const videoSpanRef = useRef<HTMLSpanElement[]>([])
     const videoDivRef = useRef<HTMLDivElement[]>([])
      
-  // video and indicator
+  
   const [video, setVideo] = useState<videoState>({
     isEnd: false,
     startPlay: false,
