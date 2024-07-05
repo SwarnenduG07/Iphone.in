@@ -1,21 +1,9 @@
+
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { GroupProps } from '@react-three/fiber'
-import { GLTF } from 'three/examples/jsm/Addons.js'
-import * as THREE from "three"
-
-
-type GLTFResult = GLTF & {
-  nodes: {
-    [key: string]: THREE.Mesh
-  }
-  materials: {
-    [key: string]: THREE.Material
-  }
-}
-
-export function Model(props: GroupProps) {
-  const { nodes, materials } = useGLTF('/scene.glb') as unknown as GLTFResult
+//@ts-ignore
+ function Model(props) {
+  const { nodes, materials } = useGLTF('/models/scene.glb')
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -238,5 +226,6 @@ export function Model(props: GroupProps) {
     </group>
   )
 }
+export default Model
 
-useGLTF.preload('/scene.glb')
+useGLTF.preload('/models/scene.glb')
